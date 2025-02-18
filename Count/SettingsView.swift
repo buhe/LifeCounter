@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
     @ObservedObject var model: CountdownModel
@@ -14,16 +13,16 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                DatePicker("出生日期",
+                DatePicker("Birth Date",
                           selection: $model.birthDate,
                           displayedComponents: .date)
                 
-                Stepper("期望年龄: \(model.expectedAge)",
+                Stepper("Expected Age: \(model.expectedAge)",
                         value: $model.expectedAge,
                         in: 1...120)
             }
-            .navigationTitle("设置")
-            .navigationBarItems(trailing: Button("完成") {
+            .navigationTitle("Settings")
+            .navigationBarItems(trailing: Button("Done") {
                 dismiss()
             })
         }
