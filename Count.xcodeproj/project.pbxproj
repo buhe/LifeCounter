@@ -51,6 +51,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3F2ACA462D66D231007E28DB /* CountWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = CountWidgetExtension.entitlements; sourceTree = "<group>"; };
 		3FCD040E2D6480250086E3BC /* Count.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Count.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FCD04242D6480260086E3BC /* CountTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FCD042E2D6480260086E3BC /* CountUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CountUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -71,6 +72,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				CountdownModel.swift,
+				SharedConfig.swift,
 			);
 			target = 3FE71B4D2D65B3D900C1C94D /* CountWidgetExtension */;
 		};
@@ -142,6 +144,7 @@
 		3FCD04052D6480250086E3BC = {
 			isa = PBXGroup;
 			children = (
+				3F2ACA462D66D231007E28DB /* CountWidgetExtension.entitlements */,
 				3FCD04102D6480250086E3BC /* Count */,
 				3FCD04272D6480260086E3BC /* CountTests */,
 				3FCD04312D6480260086E3BC /* CountUITests */,
@@ -684,6 +687,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CountWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N22PJBS26Y;
@@ -713,6 +717,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = CountWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = N22PJBS26Y;
