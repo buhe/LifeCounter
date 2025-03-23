@@ -18,8 +18,8 @@ struct PieChartView: View {
         let remaining = model.totalDays - usedDays
         
         return [
-            PieSlice(value: Double(beforeIndependence), color: .orange, label: "Before Independence"),
-            PieSlice(value: Double(afterIndependence), color: .blue, label: "After Independence"),
+            PieSlice(value: Double(beforeIndependence), color: .orange, label: "Before"),
+            PieSlice(value: Double(afterIndependence), color: .blue, label: "After"),
             PieSlice(value: Double(remaining), color: .gray, label: "Remaining")
         ]
     }
