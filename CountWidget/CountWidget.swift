@@ -49,12 +49,20 @@ struct CountWidgetEntryView : View {
         switch option {
         case "black":
             return [Color.black, Color(UIColor.darkGray)]
-        case "yellow":
-            return [.yellow, .orange]
         case "red":
             return [.red, .orange]
         case "green":
             return [.green, .mint]
+        case "custom":
+            let primaryColor = Color(UIColor(red: CGFloat(SharedConfig.sharedUserDefaults?.float(forKey: "customColorRed") ?? 0.5),
+                                          green: CGFloat(SharedConfig.sharedUserDefaults?.float(forKey: "customColorGreen") ?? 0.5),
+                                          blue: CGFloat(SharedConfig.sharedUserDefaults?.float(forKey: "customColorBlue") ?? 0.8),
+                                          alpha: 1.0))
+            let secondaryColor = Color(UIColor(red: CGFloat(SharedConfig.sharedUserDefaults?.float(forKey: "customColorRed2") ?? 0.3),
+                                             green: CGFloat(SharedConfig.sharedUserDefaults?.float(forKey: "customColorGreen2") ?? 0.3),
+                                             blue: CGFloat(SharedConfig.sharedUserDefaults?.float(forKey: "customColorBlue2") ?? 0.6),
+                                             alpha: 1.0))
+            return [primaryColor, secondaryColor]
         default: // purple or any unknown value
             return [.purple, .blue]
         }

@@ -13,9 +13,9 @@ class CountdownModel: ObservableObject {
     enum BackgroundColorOption: String, CaseIterable {
         case purple = "purple"
         case black = "black"
-        case yellow = "yellow"
         case red = "red"
         case green = "green"
+        case custom = "custom"
         
         var colors: [Color] {
             switch self {
@@ -23,12 +23,17 @@ class CountdownModel: ObservableObject {
                 return [.purple, .blue]
             case .black:
                 return [Color.black, Color(UIColor.darkGray)]
-            case .yellow:
-                return [.yellow, .orange]
             case .red:
                 return [.red, .orange]
             case .green:
                 return [.green, .mint]
+            case .custom:
+                let customColor = Color(UIColor(red: CGFloat(SharedConfig.sharedUserDefaults?.float(forKey: "customColorRed") ?? 0.5),
+                                              green: CGFloat(SharedConfig.sharedUserDefaults?.float(forKey: "customColorGreen") ?? 0.5),
+                                              blue: CGFloat(SharedConfig.sharedUserDefaults?.float(forKey: "customColorBlue") ?? 0.8),
+                                              alpha: 1.0))
+                // Use the same color with slight variation for gradient effect
+                return [customColor, customColor.opacity(0.7)]
             }
         }
     }
