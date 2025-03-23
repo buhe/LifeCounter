@@ -12,11 +12,13 @@ struct ContentView: View {
                          endPoint: .bottomTrailing)
                 .ignoresSafeArea()
             
-            VStack(spacing: 30) {
+            VStack(spacing: 25) {
                 Text("Life Countdown")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 10)
                 
                 CountdownCard(title: "Remaining Days", value: model.remainingDays)
                 CountdownCard(title: "Remaining Weeks", value: model.remainingWeeks)
@@ -24,17 +26,25 @@ struct ContentView: View {
                 
                 // 添加饼图视图
                 PieChartView(model: model)
-                
-                Button(action: { isSettingsPresented = true }) {
-                    Text("Settings")
-                        .font(.title2)
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.white.opacity(0.2))
-                        .cornerRadius(10)
-                }
             }
             .padding()
+            
+            // Settings button in top-right corner
+            VStack {
+                HStack {
+                    Spacer()
+                    Button(action: { isSettingsPresented = true }) {
+                        Image(systemName: "gear")
+                            .font(.title2)
+                            .foregroundColor(.white)
+                            .padding(10)
+                            .background(Color.white.opacity(0.2))
+                            .clipShape(Circle())
+                    }
+                    .padding([.top, .trailing], 16)
+                }
+                Spacer()
+            }
         }
         .sheet(isPresented: $isSettingsPresented) {
             SettingsView(model: model)
