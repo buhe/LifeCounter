@@ -21,6 +21,10 @@ struct SettingsView: View {
                     Stepper("Expected Age: \(model.expectedAge)",
                             value: $model.expectedAge,
                             in: 1...120)
+                    
+                    Stepper("Independence Age: \(model.independentAge)",
+                            value: $model.independentAge,
+                            in: 1...model.expectedAge)
                 }
                 
                 Section(header: Text("Background Color")) {

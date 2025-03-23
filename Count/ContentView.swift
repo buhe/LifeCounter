@@ -22,6 +22,9 @@ struct ContentView: View {
                 CountdownCard(title: "Remaining Weeks", value: model.remainingWeeks)
                 CountdownCard(title: "Remaining Years", value: model.remainingAutumns)
                 
+                // 添加饼图视图
+                PieChartView(model: model)
+                
                 Button(action: { isSettingsPresented = true }) {
                     Text("Settings")
                         .font(.title2)

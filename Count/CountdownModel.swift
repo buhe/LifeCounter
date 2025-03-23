@@ -46,6 +46,14 @@ class CountdownModel: ObservableObject {
         }
     }
     
+    @Published var independentAge: Int {
+        didSet {
+            SharedConfig.sharedUserDefaults?.set(independentAge, forKey: "independentAge")
+            NotificationCenter.default.post(name: .countdownDataDidChange, object: nil)
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+    }
+    
     @Published var backgroundColorOption: BackgroundColorOption {
         didSet {
             SharedConfig.sharedUserDefaults?.set(backgroundColorOption.rawValue, forKey: "backgroundColorOption")
@@ -58,6 +66,7 @@ class CountdownModel: ObservableObject {
         // 从共享的 UserDefaults 读取存储的数据，如果没有则使用默认值
         self.birthDate = SharedConfig.sharedUserDefaults?.object(forKey: "birthDate") as? Date ?? Date()
         self.expectedAge = SharedConfig.sharedUserDefaults?.integer(forKey: "expectedAge") ?? 0
+        self.independentAge = SharedConfig.sharedUserDefaults?.integer(forKey: "independentAge") ?? 0
         
         // 读取背景色选项，默认为紫色
         let colorOptionString = SharedConfig.sharedUserDefaults?.string(forKey: "backgroundColorOption") ?? BackgroundColorOption.purple.rawValue
@@ -67,6 +76,12 @@ class CountdownModel: ObservableObject {
         if self.expectedAge == 0 {
             self.expectedAge = 80
             SharedConfig.sharedUserDefaults?.set(self.expectedAge, forKey: "expectedAge")
+        }
+        
+        // 如果 independentAge 为 0（未设置），设置默认值为18岁
+        if self.independentAge == 0 {
+            self.independentAge = 18
+            SharedConfig.sharedUserDefaults?.set(self.independentAge, forKey: "independentAge")
         }
         
         // 添加定时器以定期更新数据
@@ -91,5 +106,28 @@ class CountdownModel: ObservableObject {
         let endDate = calendar.date(byAdding: .year, value: expectedAge, to: birthDate) ?? Date()
         let components = calendar.dateComponents([.year], from: Date(), to: endDate)
         return components.year ?? 0
+    }
+    
+    // 计算总天数（从出生到预期寿命）
+    var totalDays: Int {
+        let calendar = Calendar.current
+        let endDate = calendar.date(byAdding: .year, value: expectedAge, to: birthDate) ?? Date()
+        let components = calendar.dateComponents([.day], from: birthDate, to: endDate)
+        return components.day ?? 0
+    }
+    
+    // 计算独立前的天数（从出生到独立年龄）
+    var daysBeforeIndependence: Int {
+        let calendar = Calendar.current
+        let independenceDate = calendar.date(byAdding: .year, value: independentAge, to: birthDate) ?? Date()
+        let components = calendar.dateComponents([.day], from: birthDate, to: independenceDate)
+        return components.day ?? 0
+    }
+    
+    // 计算已经过去的天数（从出生到现在）
+    var passedDays: Int {
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.day], from: birthDate, to: Date())
+        return components.day ?? 0
     }
 }
