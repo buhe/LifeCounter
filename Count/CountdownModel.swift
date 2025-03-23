@@ -15,6 +15,7 @@ class CountdownModel: ObservableObject {
         case black = "black"
         case yellow = "yellow"
         case red = "red"
+        case green = "green"
         
         var colors: [Color] {
             switch self {
@@ -26,6 +27,8 @@ class CountdownModel: ObservableObject {
                 return [.yellow, .orange]
             case .red:
                 return [.red, .orange]
+            case .green:
+                return [.green, .mint]
             }
         }
     }
@@ -68,9 +71,9 @@ class CountdownModel: ObservableObject {
         self.expectedAge = SharedConfig.sharedUserDefaults?.integer(forKey: "expectedAge") ?? 0
         self.independentAge = SharedConfig.sharedUserDefaults?.integer(forKey: "independentAge") ?? 0
         
-        // 读取背景色选项，默认为紫色
-        let colorOptionString = SharedConfig.sharedUserDefaults?.string(forKey: "backgroundColorOption") ?? BackgroundColorOption.purple.rawValue
-        self.backgroundColorOption = BackgroundColorOption(rawValue: colorOptionString) ?? .purple
+        // 读取背景色选项，默认为绿色
+        let colorOptionString = SharedConfig.sharedUserDefaults?.string(forKey: "backgroundColorOption") ?? BackgroundColorOption.green.rawValue
+        self.backgroundColorOption = BackgroundColorOption(rawValue: colorOptionString) ?? .green
         
         // 如果 expectedAge 为 0（未设置），设置默认值
         if self.expectedAge == 0 {

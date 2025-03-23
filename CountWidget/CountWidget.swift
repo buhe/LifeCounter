@@ -8,7 +8,7 @@ struct Provider: TimelineProvider {
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let model = CountdownModel()
-        let colorOption = SharedConfig.sharedUserDefaults?.string(forKey: "backgroundColorOption") ?? "purple"
+        let colorOption = SharedConfig.sharedUserDefaults?.string(forKey: "backgroundColorOption") ?? "green"
         
         let entry = SimpleEntry(
             date: Date(),
@@ -21,7 +21,7 @@ struct Provider: TimelineProvider {
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let model = CountdownModel()
-        let colorOption = SharedConfig.sharedUserDefaults?.string(forKey: "backgroundColorOption") ?? "purple"
+        let colorOption = SharedConfig.sharedUserDefaults?.string(forKey: "backgroundColorOption") ?? "green"
         
         let entry = SimpleEntry(
             date: Date(),
@@ -53,6 +53,8 @@ struct CountWidgetEntryView : View {
             return [.yellow, .orange]
         case "red":
             return [.red, .orange]
+        case "green":
+            return [.green, .mint]
         default: // purple or any unknown value
             return [.purple, .blue]
         }
