@@ -7,8 +7,29 @@
 
 import Foundation
 import WidgetKit
+import SwiftUI
 
 class CountdownModel: ObservableObject {
+    enum BackgroundColorOption: String, CaseIterable {
+        case purple = "purple"
+        case black = "black"
+        case yellow = "yellow"
+        case red = "red"
+        
+        var colors: [Color] {
+            switch self {
+            case .purple:
+                return [.purple, .blue]
+            case .black:
+                return [Color.black, Color(UIColor.darkGray)]
+            case .yellow:
+                return [.yellow, .orange]
+            case .red:
+                return [.red, .orange]
+            }
+        }
+    }
+    
     @Published var birthDate: Date {
         didSet {
             SharedConfig.sharedUserDefaults?.set(birthDate, forKey: "birthDate")
@@ -25,10 +46,22 @@ class CountdownModel: ObservableObject {
         }
     }
     
+    @Published var backgroundColorOption: BackgroundColorOption {
+        didSet {
+            SharedConfig.sharedUserDefaults?.set(backgroundColorOption.rawValue, forKey: "backgroundColorOption")
+            NotificationCenter.default.post(name: .countdownDataDidChange, object: nil)
+            WidgetCenter.shared.reloadAllTimelines()
+        }
+    }
+    
     init() {
         // 从共享的 UserDefaults 读取存储的数据，如果没有则使用默认值
         self.birthDate = SharedConfig.sharedUserDefaults?.object(forKey: "birthDate") as? Date ?? Date()
         self.expectedAge = SharedConfig.sharedUserDefaults?.integer(forKey: "expectedAge") ?? 0
+        
+        // 读取背景色选项，默认为紫色
+        let colorOptionString = SharedConfig.sharedUserDefaults?.string(forKey: "backgroundColorOption") ?? BackgroundColorOption.purple.rawValue
+        self.backgroundColorOption = BackgroundColorOption(rawValue: colorOptionString) ?? .purple
         
         // 如果 expectedAge 为 0（未设置），设置默认值
         if self.expectedAge == 0 {

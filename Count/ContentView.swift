@@ -7,7 +7,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             // 背景渐变
-            LinearGradient(gradient: Gradient(colors: [.purple, .blue]),
+            LinearGradient(gradient: Gradient(colors: model.backgroundColorOption.colors),
                          startPoint: .topLeading,
                          endPoint: .bottomTrailing)
                 .ignoresSafeArea()

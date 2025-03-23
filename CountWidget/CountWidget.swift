@@ -3,25 +3,31 @@ import SwiftUI
 
 struct Provider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), remainingDays: 0, remainingWeeks: 0)
+        SimpleEntry(date: Date(), remainingDays: 0, remainingWeeks: 0, backgroundColorOption: "purple")
     }
 
     func getSnapshot(in context: Context, completion: @escaping (SimpleEntry) -> ()) {
         let model = CountdownModel()
+        let colorOption = SharedConfig.sharedUserDefaults?.string(forKey: "backgroundColorOption") ?? "purple"
+        
         let entry = SimpleEntry(
             date: Date(),
             remainingDays: model.remainingDays,
-            remainingWeeks: model.remainingWeeks
+            remainingWeeks: model.remainingWeeks,
+            backgroundColorOption: colorOption
         )
         completion(entry)
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         let model = CountdownModel()
+        let colorOption = SharedConfig.sharedUserDefaults?.string(forKey: "backgroundColorOption") ?? "purple"
+        
         let entry = SimpleEntry(
             date: Date(),
             remainingDays: model.remainingDays,
-            remainingWeeks: model.remainingWeeks
+            remainingWeeks: model.remainingWeeks,
+            backgroundColorOption: colorOption
         )
         
         let timeline = Timeline(entries: [entry], policy: .atEnd)
@@ -33,10 +39,24 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
     let remainingDays: Int
     let remainingWeeks: Int
+    let backgroundColorOption: String
 }
 
 struct CountWidgetEntryView : View {
     var entry: Provider.Entry
+    
+    func getBackgroundColors(for option: String) -> [Color] {
+        switch option {
+        case "black":
+            return [Color.black, Color(UIColor.darkGray)]
+        case "yellow":
+            return [.yellow, .orange]
+        case "red":
+            return [.red, .orange]
+        default: // purple or any unknown value
+            return [.purple, .blue]
+        }
+    }
 
     var body: some View {
         VStack(spacing: 20) {
@@ -64,7 +84,7 @@ struct CountWidgetEntryView : View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .containerBackground(for: .widget) {
-            LinearGradient(gradient: Gradient(colors: [.purple, .blue]),
+            LinearGradient(gradient: Gradient(colors: getBackgroundColors(for: entry.backgroundColorOption)),
                          startPoint: .topLeading,
                          endPoint: .bottomTrailing)
         }
@@ -87,7 +107,7 @@ struct CountWidget: Widget {
 
 struct CountWidget_Previews: PreviewProvider {
     static var previews: some View {
-        CountWidgetEntryView(entry: SimpleEntry(date: Date(), remainingDays: 10000, remainingWeeks: 1428))
+        CountWidgetEntryView(entry: SimpleEntry(date: Date(), remainingDays: 10000, remainingWeeks: 1428, backgroundColorOption: "purple"))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
