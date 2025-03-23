@@ -99,7 +99,7 @@ struct ColorCircleButton: View {
                         ColorPicker("", selection: customColorBinding ?? .constant(.blue))
                             .labelsHidden()
                             .opacity(customColorBinding == nil ? 0 : 1)
-                            .onChange(of: customColorBinding?.wrappedValue) { _ in
+                            .onChange(of: customColorBinding?.wrappedValue) { oldValue, newValue in
                                 selectedOption = .custom
                             }
                     )
